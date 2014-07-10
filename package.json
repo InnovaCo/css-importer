@@ -1,0 +1,28 @@
+{
+  "name": "css-importer",
+  "version": "1.0.0",
+  "description": "Imports CSS from one project into another with optional source rewrite",
+  "main": "index.js",
+  "scripts": {
+    "test": "./node_modules/.bin/mocha --reporter list"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:InnovaCo/css-importer.git"
+  },
+  "keywords": [
+    "css",
+    "import",
+    "rewrite"
+  ],
+  "author": "Sergey Chikuyonok",
+  "license": "MIT",
+  "dependencies": {
+    "async": "^0.9.0",
+    "glob": "^4.0.3",
+    "postcss": "^1.0.0"
+  },
+  "devDependencies": {
+    "mocha": "^1.20.1"
+  }
+}
