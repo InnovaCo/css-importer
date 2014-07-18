@@ -8,6 +8,13 @@ function read(filePath, isString) {
 	return fs.readFileSync(path.join(__dirname, filePath), isString ? {encoding: 'utf8'} : null);
 }
 
+function fileObj(src) {
+	return {
+		src: src,
+		cwd: __dirname
+	};
+}
+
 describe('CSS importer', function() {
 	it('should work', function(done) {
 		transformer()
@@ -15,7 +22,7 @@ describe('CSS importer', function() {
 				root: __dirname,
 				prefix: '/a/b'
 			}))
-			.run('css/*.css', {cwd: __dirname}, function(err, out) {
+			.run(fileObj('css/*.css'), function(err, out) {
 				assert.equal(out.length, 1);
 				assert.equal(out[0].content, read('fixtures/file1.css'));
 				done();

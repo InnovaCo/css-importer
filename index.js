@@ -1,6 +1,6 @@
 var postcss = require('postcss');
 var async = require('async');
-var fileUtils = require('./lib/file-utils');
+var utils = require('importer-utils');
 
 function Transformer(stylesheet, options) {
 	if (!(this instanceof Transformer)) {
@@ -22,30 +22,6 @@ Transformer.prototype = {
 		return this;
 	},
 
-	/**
-	 * Готовим набор CSS-файлов к преобразованию: резолвим пути,
-	 * читаем файлы и применяем препроцессинг (если надо)
-	 * @param  {Function} callback
-	 */
-	_prepareInput: function(files, options, callback) {
-		var self = this;
-		async.waterfall([
-			function(callback) {
-				fileUtils.read(files, options, callback);
-			},
-			function(input, callback) {
-				async.map(input, function(item, callback) {
-					self._processDoc(item, function(content) {
-						callback(null, {
-							file: item.file,
-							content: content
-						});
-					});
-				}, callback);
-			}
-		], callback);
-	},
-
 	_processDoc: function(res, callback) {
 		var queue = this._processors.slice(0);
 		var out = postcss(function(css) {
@@ -63,13 +39,23 @@ Transformer.prototype = {
 		}).process(res.content);
 	},
 
-	run: function(files, options, callback) {
-		if (typeof options === 'function') {
-			callback = options;
-			options = null;
-		}
-
-		this._prepareInput(files, options, callback);
+	run: function(files, callback) {
+		var self = this;
+		async.waterfall([
+			function(callback) {
+				utils.file.read(files, callback);
+			},
+			function(input, callback) {
+				async.map(input, function(item, callback) {
+					self._processDoc(item, function(content) {
+						callback(null, {
+							file: item.file,
+							content: content
+						});
+					});
+				}, callback);
+			}
+		], callback);
 	}
 };
 
