@@ -48,10 +48,9 @@ Transformer.prototype = {
 			function(input, callback) {
 				async.map(input, function(item, callback) {
 					self._processDoc(item, function(content) {
-						callback(null, {
-							file: item.file,
+						callback(null, utils.extend({}, item, {
 							content: content
-						});
+						}));
 					});
 				}, callback);
 			}
