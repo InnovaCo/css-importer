@@ -1,6 +1,6 @@
 {
   "name": "css-importer",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Imports CSS from one project into another with optional source rewrite",
   "main": "index.js",
   "scripts": {

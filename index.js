@@ -23,12 +23,14 @@ Transformer.prototype = {
 	},
 
 	_processDoc: function(res, callback) {
+		var out;
 		var queue = this._processors.slice(0);
-		var out = postcss(function(css) {
+		var proc = postcss(function(css) {
 			var next = function() {
 				if (!queue.length) {
 					return setTimeout(function() {
-						callback(out.css);
+						res.content = out.css;
+						callback(null, res);
 					}, 1);
 				}
 
@@ -36,23 +38,26 @@ Transformer.prototype = {
 				fn.length > 2 ? fn(css, res, next) : next(fn(css, res));
 			};
 			next();
-		}).process(res.content);
+		});
+
+		try {
+			out = proc.process(res.content);
+		} catch (e) {
+			if (res.absPath) {
+				e = new Error(e.message + ' in ' + res.absPath);
+			}
+			callback(e);
+		}
 	},
 
 	run: function(files, callback) {
-		var self = this;
+		var process = this._processDoc.bind(this);
 		async.waterfall([
 			function(callback) {
 				utils.file.read(files, callback);
 			},
 			function(input, callback) {
-				async.map(input, function(item, callback) {
-					self._processDoc(item, function(content) {
-						callback(null, utils.extend({}, item, {
-							content: content
-						}));
-					});
-				}, callback);
+				async.map(input, process, callback);
 			}
 		], callback);
 	}

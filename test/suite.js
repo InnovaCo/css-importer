@@ -22,9 +22,18 @@ describe('CSS importer', function() {
 				root: __dirname,
 				prefix: '/a/b'
 			}))
-			.run(fileObj('css/*.css'), function(err, out) {
+			.run(fileObj('css/file1.css'), function(err, out) {
 				assert.equal(out.length, 1);
 				assert.equal(out[0].content, read('fixtures/file1.css'));
+				done();
+			});
+	});
+
+	it('throw exception', function(done) {
+		transformer()
+			.run(fileObj('css/error.css'), function(err, out) {
+				assert(err);
+				assert(err.message.indexOf('css/error.css') !== -1, 'Error contains file name');
 				done();
 			});
 	});
