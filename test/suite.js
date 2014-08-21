@@ -16,7 +16,7 @@ function fileObj(src) {
 }
 
 describe('CSS importer', function() {
-	it('should work', function(done) {
+	it('process CSS', function(done) {
 		transformer()
 			.use(rewrite({
 				root: __dirname,

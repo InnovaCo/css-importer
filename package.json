@@ -4,7 +4,7 @@
   "description": "Imports CSS from one project into another with optional source rewrite",
   "main": "index.js",
   "scripts": {
-    "test": "./node_modules/.bin/mocha --reporter list"
+    "test": "./node_modules/.bin/mocha --reporter spec"
   },
   "repository": {
     "type": "git",
