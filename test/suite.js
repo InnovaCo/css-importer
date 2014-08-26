@@ -5,7 +5,7 @@ var transformer = require('../');
 var rewrite = require('../lib/rewrite-url');
 
 function read(filePath, isString) {
-	return fs.readFileSync(path.join(__dirname, filePath), isString ? {encoding: 'utf8'} : null);
+	return fs.readFileSync(path.join(__dirname, filePath), 'utf8');
 }
 
 function fileObj(src) {
@@ -19,7 +19,7 @@ describe('CSS importer', function() {
 	it('process CSS', function(done) {
 		transformer()
 			.use(rewrite({
-				root: __dirname,
+				cwd: __dirname,
 				prefix: '/a/b'
 			}))
 			.run(fileObj('css/file1.css'), function(err, out) {

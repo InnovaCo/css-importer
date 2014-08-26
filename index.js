@@ -43,8 +43,8 @@ Transformer.prototype = {
 		try {
 			out = proc.process(res.content);
 		} catch (e) {
-			if (res.absPath) {
-				e = new Error(e.message + ' in ' + res.absPath);
+			if (res.origin) {
+				e = new Error(e.message + ' in ' + res.origin);
 			}
 			callback(e);
 		}
