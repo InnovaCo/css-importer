@@ -1,6 +1,6 @@
 {
   "name": "css-importer",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Imports CSS from one project into another with optional source rewrite",
   "main": "index.js",
   "scripts": {
@@ -20,7 +20,7 @@
   "dependencies": {
     "async": "^0.9.0",
     "glob": "^4.0.3",
-    "importer-utils": "git+https://github.com/InnovaCo/importer-utils.git#v1.0.1",
+    "importer-utils": "git+https://github.com/InnovaCo/importer-utils.git#v1.0.2",
     "postcss": "^1.0.0"
   },
   "devDependencies": {
